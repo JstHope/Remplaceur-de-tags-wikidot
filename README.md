@@ -1,4 +1,4 @@
-# remplaceur-de-tags-wikidot
+# Remplaceur de tags automatisé pour wikidot
 Merci a Cyrielle pour les commentaires et Lekter pour les testes en condition réel.
 
 ## Requirements
