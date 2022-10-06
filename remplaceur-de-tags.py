@@ -18,7 +18,7 @@ SESSION_ID = ''
 #génére un token random
 TOKEN7 = str(randint(10000000000,100000000000))
 
-THESERVER = 'sandboxscpfr'
+THESERVER = 'fondationscp'
 
 colorama.init()
 # Retourn la liste des tags d’une page ainsi que son ID Wikidot.
