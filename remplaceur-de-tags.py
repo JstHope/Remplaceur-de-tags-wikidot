@@ -7,21 +7,25 @@ from bs4 import BeautifulSoup
 # Permet d’afficher une sortie en couleurs, entre autres (inutilisé dans le fonctionnement de fond)
 from colorama import Fore
 import colorama
+
+# Pour générer un token7 aléatoire
 from random import randint
 
 ################### À MODIFIER ######################## Tutoriel : https://prnt.sc/GipvrEQ1dbDo ||| https://prnt.sc/i1sBMkKe1J2T ||| https://prnt.sc/ePwFDuvo-H9O
 USERAGENT = ''
 SESSION_ID = ''
 #######################################################
-WIKIDOTTOKEN = str(randint(99999999999,999999999999))
-THESERVER = 'fondationscp'
+#génére un token random
+TOKEN7 = str(randint(10000000000,100000000000))
+
+THESERVER = 'sandboxscpfr'
 
 colorama.init()
 # Retourn la liste des tags d’une page ainsi que son ID Wikidot.
 # url : l’url de la page sur laquelle chercher les tags et l’ID
 def get_tags_id(url):
 	# Va chercher la page HTML de l’url donnée
-    r = requests.get(url, headers={'User-Agent':USERAGENT,'Cookie':'WIKIDOT_SESSION_ID=' + SESSION_ID + f'; wikidot_token7={WIKIDOTTOKEN};'},data={'wikidot_token7':WIKIDOTTOKEN})
+    r = requests.get(url, headers={'User-Agent':USERAGENT,'Cookie':'WIKIDOT_SESSION_ID=' + SESSION_ID + '; wikidot_token7=' + TOKEN7 + ';'},data={'wikidot_token7':TOKEN7})
     # Interprète l’HTML
     results = BeautifulSoup(r.text, features='lxml')
     # Récupère la liste des tags en allant chercher dans le div des tags les liens de tags
@@ -58,26 +62,26 @@ def addtag(newTag,link):
     # Ajoute le tag à ajouter à la liste totale des tags
     uploadtags += newTag
     # Envoie une requête à Wikidot pour renvoyer tous les tags sur la page
-    requests.post(url = 'http://' + THESERVER + '.wikidot.com/ajax-module-connector.php', headers={'Host': THESERVER + '.wikidot.com','User-Agent': USERAGENT,'Cookie': f'wikidot_token7={WIKIDOTTOKEN}' + '; WIKIDOT_SESSION_ID='+ SESSION_ID + ';'},data={'tags':uploadtags,'pageId':ids,'action':'WikiPageAction','event':'saveTags','moduleName':'Empty','callbackIndex':'1','wikidot_token7':WIKIDOTTOKEN})
+    requests.post(url = 'http://' + THESERVER + '.wikidot.com/ajax-module-connector.php', headers={'Host': THESERVER + '.wikidot.com','User-Agent': USERAGENT,'Cookie': 'wikidot_token7=' + TOKEN7 + '; WIKIDOT_SESSION_ID='+ SESSION_ID + ';'},data={'tags':uploadtags,'pageId':ids,'action':'WikiPageAction','event':'saveTags','moduleName':'Empty','callbackIndex':'1','wikidot_token7':TOKEN7})
 
 # Remplace un tag oldTag par un tag newTag sur une page link
 def replacetag(newTag,oldTag,link):
 	# Retourne la liste des tags et l’identifiant de la page link
     tags,ids = get_tags_id(link)
     # Supprime le tag oldTag
-    tags[tags.index(oldTag)] = ''
+    del tags[tags.index(oldTag)]
     # Forme la liste de tags à uploader (tous les tags actuels à l’exception de celui retiré) séparés par des espaces
     uploadtags = ''
     for i in range(len(tags)):
         uploadtags += tags[i] + ' ' # Le tag supprimé va faire que deux espaces vont se suivre
     uploadtags += newTag # Ajout du nouveau tag à la liste totale
     # Envoie une requête à Wikidot pour renvoyer tous les tags sur la page
-    requests.post(url = 'http://' + THESERVER + '.wikidot.com/ajax-module-connector.php', headers={'Host': THESERVER + '.wikidot.com','User-Agent': USERAGENT,'Cookie': f'wikidot_token7={WIKIDOTTOKEN}' + '; WIKIDOT_SESSION_ID='+ SESSION_ID + ';'},data={'tags':uploadtags,'pageId':ids,'action':'WikiPageAction','event':'saveTags','moduleName':'Empty','callbackIndex':'1','wikidot_token7':WIKIDOTTOKEN})
+    requests.post(url = 'http://' + THESERVER + '.wikidot.com/ajax-module-connector.php', headers={'Host': THESERVER + '.wikidot.com','User-Agent': USERAGENT,'Cookie': 'wikidot_token7=' + TOKEN7 + '; WIKIDOT_SESSION_ID='+ SESSION_ID + ';'},data={'tags':uploadtags,'pageId':ids,'action':'WikiPageAction','event':'saveTags','moduleName':'Empty','callbackIndex':'1','wikidot_token7':TOKEN7})
 
 # Retourne toutes les pages ayant le tag demandé, d’abord leurs titres puis leurs liens.
 def finddallpageswithtag(tag):
 	# Récupère la page du tag donné
-    r = requests.get('http://' + THESERVER + '.wikidot.com/system:page-tags/tag/' + tag, headers={'User-Agent':USERAGENT,'Cookie':'WIKIDOT_SESSION_ID=' + SESSION_ID + f'; wikidot_token7={WIKIDOTTOKEN};'},data={'wikidot_token7':WIKIDOTTOKEN})
+    r = requests.get('http://' + THESERVER + '.wikidot.com/system:page-tags/tag/' + tag, headers={'User-Agent':USERAGENT,'Cookie':'WIKIDOT_SESSION_ID=' + SESSION_ID + '; wikidot_token7=' + TOKEN7 + ';'},data={'wikidot_token7':TOKEN7})
     # Interprète l’HTML
     results = BeautifulSoup(r.text, features='lxml')
     # Retourne la liste des liens présents dans la page dans les divs qui présentent la liste des pages
