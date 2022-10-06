@@ -1,4 +1,3 @@
-# Si vous rencontrez des problèmes, n'hésitez pas à m'envoyer un MP sur Discord : Η Ο Ρ Ξ#9999
 # !!!!!!!! LIBRARY !!!!!!!! pip install lxml requests bs4 colorama
 
 # Envoyer des requêtes HTTP et fonctions propres aux systèmes
